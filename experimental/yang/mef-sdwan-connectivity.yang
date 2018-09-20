@@ -1,0 +1,251 @@
+module mef-sdwan-connectivity {
+  namespace "urn:mef:yang:sdwan-connectivity";
+  prefix sdwan-conn;
+
+  import tapi-connectivity {
+    prefix tapi-connectivity;
+  }
+
+  import tapi-common {
+    prefix tapi-common;
+  }
+
+  import ietf-inet-types {
+    prefix "inet";
+  }
+
+  import mef-common-types {
+    prefix common;
+  }
+
+  import mef-sdwan {
+    prefix sdwan;
+  }
+
+  organization "MEF Forum";
+  contact "MEF Forum";
+
+  revision 2018-08-30 {
+    description "MEF SD-WAN Connectivity";
+    reference "Contribution A66009_001_SD-WAN WD 0.18-cfcb1_Ruffles.pdf";
+  }
+
+  grouping swvc-endpoint-attributes {
+    leaf endpoint-identifier {
+      type identifier-63;
+    }
+
+    leaf endpoint-uni {
+      type uni-identifier;
+    }
+
+    container policy-overrides {
+      list policy-override {
+        key 'app-id';
+        leaf app-id {
+          type string; /* TODO */
+        }
+        leaf policy-name {
+          type string; /* TODO */
+        }
+      }
+    }
+  }
+
+  grouping swvc-service-attributes {
+    leaf swvc-identifier {
+      type identifier-63;
+    }
+
+    leaf-list endpoints {
+      type string; /* TODO: leafref path for endpoint identifier */
+    }
+
+    container performance-groups {
+      list performance-group {
+        key 'pg-name';
+        leaf pg-name {
+          type string; /* TODO */
+        }
+
+        container ordered-pairs {
+          list ordered-pair {
+            key 'from to';
+            leaf from {
+              type string; /* TODO endpoint reference */
+            }
+            leaf to {
+              type string; /* TOOD endpoint reference */
+            }
+          }
+        }
+      }
+    }
+
+    container performance-monitoring-schedule {
+      leaf start-time {
+        type string; /* TODO */
+      }
+
+      leaf duration {
+        type string; /* TODO */
+      }
+    }
+
+    container cos-performance-objectives {
+      list cos-performance-objective {
+        key 'cos-name';
+        leaf cos-name {
+          type string; /* TODO */
+        }
+        container performance-groups {
+          list performance-group {
+            key 'pg-name';
+            leaf pg-name {
+              type string; /* TODO */
+            }
+
+            container objectives {
+              list objective {
+                key 'name';
+                leaf name {
+                  type string; /* TODO */
+                }
+                container parameters {
+                  /* TODO */
+                }
+                leaf target {
+                  type string; /* TODO */
+                }
+              }
+            }
+
+            leaf is-default {
+              type boolean;
+            }
+          }
+        }
+      }
+    }
+
+    leaf mtu {
+      type sdwan:sdwan-mtu;
+      units "octets";
+    }
+
+    leaf path-mtu-discovery {
+      type common:operational-state;
+    }
+
+    leaf fragmentation {
+      type common:operational-state;
+    }
+
+    container reserved-prefixes {
+      leaf-list prefix {
+        type inet:ip-prefix;
+      }
+    }
+
+    container applications {
+      list application {
+        key 'app-id';
+        leaf app-id {
+          type string; /* TODO */
+        }
+
+        list criteria {
+          key 'ac-name';
+          leaf ac-name {
+            type string; /* TODO - reference valid names */
+          }
+          leaf-list ac-value {
+            type string; /* TODO - how to represent values */
+          }
+        }
+
+        leaf app-group {
+          type string;
+        }
+      }
+    }
+
+    container policies {
+      list policy {
+        key 'policy-id';
+        leaf policy-id {
+          type string; /* TODO */
+        }
+
+        list criteria {
+          key 'pc-name';
+          leaf pc-name {
+            type string;
+          }
+
+          leaf-list pc-param {
+            type string;
+          }
+        }
+      }
+    }
+
+    container application-policy-mappings {
+      list mapping {
+        key 'app-id';
+        leaf app-id {
+          type string; /* TODO */
+        }
+        leaf policy-name {
+          type string; /* TODO */
+        }
+      }
+    }
+  }
+
+  typedef identifier-63 {
+    type string;
+  }
+
+  typedef uni-identifier {
+    type string;
+  }
+
+  augment "/tapi-connectivity:create-connectivity-service/tapi-connectivity:input" {
+    container swvc-service-attributes {
+      uses swvc-service-attributes;
+    }
+    description "none";
+  }
+  augment "/tapi-common:context/tapi-connectivity:connectivity-service" {
+    container swvc-service-attributes {
+      uses swvc-service-attributes;
+    }
+    description "none";
+  }
+  augment "/tapi-connectivity:create-connectivity-service/tapi-connectivity:output/tapi-connectivity:service" {
+    container swvc-service-attributes {
+      uses swvc-service-attributes;
+    }
+    description "none";
+  }
+
+  augment "/tapi-connectivity:create-connectivity-service/tapi-connectivity:output/tapi-connectivity:service/tapi-connectivity:end-point" {
+    container swvc-endpoint-attributes {
+      uses swvc-endpoint-attributes;
+    }
+    description "none";
+  }
+  augment "/tapi-connectivity:create-connectivity-service/tapi-connectivity:input/tapi-connectivity:end-point" {
+    container swvc-endpoint-attributes {
+      uses swvc-endpoint-attributes;
+    }
+    description "none";
+  }
+  augment "/tapi-common:context/tapi-connectivity:connectivity-service/tapi-connectivity:end-point" {
+    container swvc-endpoint-attributes {
+      uses swvc-endpoint-attributes;
+    }
+    description "none";
+  }
+}

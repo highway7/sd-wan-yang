@@ -229,7 +229,28 @@ module mef-sdwan-connectivity {
     }
     description "none";
   }
+  
+  augment "/tapi-connectivity:update-connectivity-service/tapi-connectivity:output/tapi-connectivity:service" {
+    container swvc-service-attributes {
+      uses swvc-service-attributes;
+    }
+    description "none";
+  }
 
+  augment "/tapi-connectivity:get-connectivity-service-details/tapi-connectivity:output/tapi-connectivity:service" {
+    container swvc-service-attributes {
+      uses swvc-service-attributes;
+    }
+    description "none";
+  }
+  
+  augment "/tapi-connectivity:get-connectivity-service-list/tapi-connectivity:output/tapi-connectivity:service" {
+    container swvc-service-attributes {
+      uses swvc-service-attributes;
+    }
+    description "none";
+  }
+  
   augment "/tapi-connectivity:create-connectivity-service/tapi-connectivity:output/tapi-connectivity:service/tapi-connectivity:end-point" {
     container swvc-endpoint-attributes {
       uses swvc-endpoint-attributes;
@@ -248,4 +269,26 @@ module mef-sdwan-connectivity {
     }
     description "none";
   }
+  
+  augment "/tapi-connectivity:update-connectivity-service/tapi-connectivity:output/tapi-connectivity:service/tapi-connectivity:end-point" {
+    container swvc-endpoint-attributes {
+      uses swvc-endpoint-attributes;
+    }
+    description "none";
+  }
+
+  augment "/tapi-connectivity:get-connectivity-service-details/tapi-connectivity:output/tapi-connectivity:service/tapi-connectivity:end-point" {
+    container swvc-endpoint-attributes {
+      uses swvc-endpoint-attributes;
+    }
+    description "none";
+  }
+  
+  augment "/tapi-connectivity:get-connectivity-service-list/tapi-connectivity:output/tapi-connectivity:service/tapi-connectivity:end-point" {
+    container swvc-endpoint-attributes {
+      uses swvc-endpoint-attributes;
+    }
+    description "none";
+  }
+  
 }

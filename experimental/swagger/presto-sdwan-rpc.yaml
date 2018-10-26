@@ -13,161 +13,6 @@ consumes:
 produces:
 - "application/yang-data+json"
 paths:
-  /data/context/:
-    get:
-      tags:
-      - "tapi-common"
-      description: "returns tapi.common.Context"
-      parameters: []
-      responses:
-        200:
-          description: "tapi.common.Context"
-          schema:
-            $ref: "#/definitions/tapi.common.Context"
-        400:
-          description: "Internal error"
-  /data/context/connection={uuid}/:
-    get:
-      tags:
-      - "tapi-connectivity"
-      description: "returns tapi.connectivity.Connection"
-      parameters:
-      - name: "uuid"
-        in: "path"
-        description: "Id of connection"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "tapi.connectivity.Connection"
-          schema:
-            $ref: "#/definitions/tapi.connectivity.Connection"
-        400:
-          description: "Internal error"
-  /data/context/connectivity-service={uuid}/:
-    get:
-      tags:
-      - "tapi-connectivity"
-      description: "returns tapi.connectivity.connectivitycontext.ConnectivityService"
-      parameters:
-      - name: "uuid"
-        in: "path"
-        description: "Id of connectivity-service"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "tapi.connectivity.connectivitycontext.ConnectivityService"
-          schema:
-            $ref: "#/definitions/tapi.connectivity.connectivitycontext.ConnectivityService"
-        400:
-          description: "Internal error"
-  /data/context/nw-topology-service/:
-    get:
-      tags:
-      - "tapi-topology"
-      description: "returns tapi.topology.NetworkTopologyService"
-      parameters: []
-      responses:
-        200:
-          description: "tapi.topology.NetworkTopologyService"
-          schema:
-            $ref: "#/definitions/tapi.topology.NetworkTopologyService"
-        400:
-          description: "Internal error"
-  /data/context/path-comp-service={uuid}/:
-    get:
-      tags:
-      - "tapi-path-computation"
-      description: "returns tapi.path.computation.PathComputationService"
-      parameters:
-      - name: "uuid"
-        in: "path"
-        description: "Id of path-comp-service"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "tapi.path.computation.PathComputationService"
-          schema:
-            $ref: "#/definitions/tapi.path.computation.PathComputationService"
-        400:
-          description: "Internal error"
-  /data/context/path={uuid}/:
-    get:
-      tags:
-      - "tapi-path-computation"
-      description: "returns tapi.path.computation.Path"
-      parameters:
-      - name: "uuid"
-        in: "path"
-        description: "Id of path"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "tapi.path.computation.Path"
-          schema:
-            $ref: "#/definitions/tapi.path.computation.Path"
-        400:
-          description: "Internal error"
-  /data/context/service-interface-point={uuid}/:
-    get:
-      tags:
-      - "tapi-common"
-      description: "returns tapi.common.context.ServiceInterfacePoint"
-      parameters:
-      - name: "uuid"
-        in: "path"
-        description: "Id of service-interface-point"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "tapi.common.context.ServiceInterfacePoint"
-          schema:
-            $ref: "#/definitions/tapi.common.context.ServiceInterfacePoint"
-        400:
-          description: "Internal error"
-  /data/context/topology={uuid}/:
-    get:
-      tags:
-      - "tapi-topology"
-      description: "returns tapi.topology.Topology"
-      parameters:
-      - name: "uuid"
-        in: "path"
-        description: "Id of topology"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "tapi.topology.Topology"
-          schema:
-            $ref: "#/definitions/tapi.topology.Topology"
-        400:
-          description: "Internal error"
-  /operations/compute-p-2-p-path/:
-    post:
-      tags:
-      - "tapi-path-computation"
-      parameters:
-      - in: "body"
-        name: "tapi.path.computation.computep2ppath.InputWrapper"
-        required: false
-        schema:
-          properties:
-            input:
-              $ref: "#/definitions/tapi.path.computation.computep2ppath.Input"
-      responses:
-        200:
-          description: "Correct response"
-          schema:
-            $ref: "#/definitions/tapi.path.computation.computep2ppath.OutputWrapper"
-        201:
-          description: "No response"
-        400:
-          description: "Internal error"
   /operations/create-connectivity-service/:
     post:
       tags:
@@ -202,27 +47,6 @@ paths:
             input:
               $ref: "#/definitions/tapi.connectivity.deleteconnectivityservice.Input"
       responses:
-        201:
-          description: "No response"
-        400:
-          description: "Internal error"
-  /operations/delete-p-2-p-path/:
-    post:
-      tags:
-      - "tapi-path-computation"
-      parameters:
-      - in: "body"
-        name: "tapi.path.computation.deletep2ppath.InputWrapper"
-        required: false
-        schema:
-          properties:
-            input:
-              $ref: "#/definitions/tapi.path.computation.deletep2ppath.Input"
-      responses:
-        200:
-          description: "Correct response"
-          schema:
-            $ref: "#/definitions/tapi.path.computation.deletep2ppath.OutputWrapper"
         201:
           description: "No response"
         400:
@@ -416,27 +240,6 @@ paths:
           description: "No response"
         400:
           description: "Internal error"
-  /operations/optimize-p-2-p-path/:
-    post:
-      tags:
-      - "tapi-path-computation"
-      parameters:
-      - in: "body"
-        name: "tapi.path.computation.optimizep2ppath.InputWrapper"
-        required: false
-        schema:
-          properties:
-            input:
-              $ref: "#/definitions/tapi.path.computation.optimizep2ppath.Input"
-      responses:
-        200:
-          description: "Correct response"
-          schema:
-            $ref: "#/definitions/tapi.path.computation.optimizep2ppath.OutputWrapper"
-        201:
-          description: "No response"
-        400:
-          description: "Internal error"
   /operations/update-connectivity-service/:
     post:
       tags:
@@ -524,14 +327,6 @@ definitions:
         type: "integer"
         format: "int32"
         description: "Maximum Transmit Unit int"
-  mef.sdwan.ServiceInterfacePointAugmentation1:
-    type: "object"
-    properties:
-      sdwan-uni:
-        $ref: "#/definitions/mef.sdwan.SdwanUni"
-    x-augmentation:
-      prefix: "mef-sdwan"
-      namespace: "urn:mef:yang:mef-sdwan"
   mef.sdwan.SipAugmentation1:
     type: "object"
     properties:
@@ -565,14 +360,6 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/mef.sdwan.connectivity.Application"
-  mef.sdwan.connectivity.ConnectivityServiceAugmentation1:
-    type: "object"
-    properties:
-      swvc-service-attributes:
-        $ref: "#/definitions/mef.sdwan.connectivity.SwvcServiceAttributes"
-    x-augmentation:
-      prefix: "mef-sdwan-connectivity"
-      namespace: "urn:mef:yang:sdwan-connectivity"
   mef.sdwan.connectivity.CosPerformanceObjective:
     type: "object"
     properties:
@@ -856,20 +643,6 @@ definitions:
       unit:
         description: "none"
         $ref: "#/definitions/tapi.common.CapacityUnit"
-  tapi.common.Context:
-    allOf:
-    - $ref: "#/definitions/tapi.common.GlobalClass"
-    - $ref: "#/definitions/tapi.connectivity.ContextAugmentation2"
-    - $ref: "#/definitions/tapi.path.computation.ContextAugmentation1"
-    - $ref: "#/definitions/tapi.topology.ContextAugmentation3"
-    - type: "object"
-      properties:
-        service-interface-point:
-          type: "array"
-          description: "none"
-          items:
-            $ref: "#/definitions/tapi.common.context.ServiceInterfacePoint"
-      description: "none"
   tapi.common.DirectiveValue:
     type: "string"
     enum:
@@ -1036,10 +809,6 @@ definitions:
       start-time:
         type: "string"
         description: "none"
-  tapi.common.context.ServiceInterfacePoint:
-    allOf:
-    - $ref: "#/definitions/mef.sdwan.ServiceInterfacePointAugmentation1"
-    - $ref: "#/definitions/tapi.common.ServiceInterfacePoint"
   tapi.common.getserviceinterfacepointdetails.Input:
     type: "object"
     properties:
@@ -1233,22 +1002,6 @@ definitions:
         type: "string"
         description: "none"
         x-path: "/tapi-common:context/tapi-connectivity:connectivity-service/tapi-connectivity:uuid"
-  tapi.connectivity.ContextAugmentation2:
-    type: "object"
-    properties:
-      connectivity-service:
-        type: "array"
-        description: "none"
-        items:
-          $ref: "#/definitions/tapi.connectivity.connectivitycontext.ConnectivityService"
-      connection:
-        type: "array"
-        description: "none"
-        items:
-          $ref: "#/definitions/tapi.connectivity.Connection"
-    x-augmentation:
-      prefix: "tapi-connectivity"
-      namespace: "urn:onf:otcc:yang:tapi-connectivity"
   tapi.connectivity.CoordinateType:
     type: "string"
     enum:
@@ -1462,32 +1215,6 @@ definitions:
           description: "none"
           x-path: "/tapi-common:context/tapi-connectivity:connection/tapi-connectivity:switch-control/tapi-connectivity:uuid"
       description: "none"
-  tapi.connectivity.connectivitycontext.ConnectivityService:
-    allOf:
-    - $ref: "#/definitions/mef.sdwan.connectivity.ConnectivityServiceAugmentation1"
-    - $ref: "#/definitions/tapi.common.AdminStatePac"
-    - $ref: "#/definitions/tapi.common.GlobalClass"
-    - $ref: "#/definitions/tapi.connectivity.ConnectivityConstraint"
-    - $ref: "#/definitions/tapi.connectivity.ResilienceConstraint"
-    - $ref: "#/definitions/tapi.path.computation.RoutingConstraint"
-    - $ref: "#/definitions/tapi.path.computation.TopologyConstraint"
-    - type: "object"
-      properties:
-        end-point:
-          type: "array"
-          description: "none"
-          items:
-            $ref: "#/definitions/tapi.connectivity.connectivityservice.EndPoint"
-        connection:
-          type: "array"
-          description: "none"
-          items:
-            $ref: "#/definitions/tapi.connectivity.ConnectionRef"
-      description: "none"
-  tapi.connectivity.connectivityservice.EndPoint:
-    allOf:
-    - $ref: "#/definitions/mef.sdwan.connectivity.EndPointAugmentation1"
-    - $ref: "#/definitions/tapi.connectivity.ConnectivityServiceEndPoint"
   tapi.connectivity.createconnectivityservice.Input:
     allOf:
     - $ref: "#/definitions/mef.sdwan.connectivity.InputAugmentation1"
@@ -1500,7 +1227,7 @@ definitions:
           type: "array"
           description: "none"
           items:
-            $ref: "#/definitions/tapi.connectivity.connectivityservice.EndPoint"
+            $ref: "#/definitions/tapi.connectivity.createconnectivityservice.input.EndPoint"
         resilience-constraint:
           type: "array"
           description: "none"
@@ -1527,6 +1254,10 @@ definitions:
     properties:
       output:
         $ref: "#/definitions/tapi.connectivity.createconnectivityservice.Output"
+  tapi.connectivity.createconnectivityservice.input.EndPoint:
+    allOf:
+    - $ref: "#/definitions/mef.sdwan.connectivity.EndPointAugmentation1"
+    - $ref: "#/definitions/tapi.connectivity.ConnectivityServiceEndPoint"
   tapi.connectivity.createconnectivityservice.output.Service:
     allOf:
     - $ref: "#/definitions/mef.sdwan.connectivity.ServiceAugmentation1"
@@ -1542,7 +1273,7 @@ definitions:
           type: "array"
           description: "none"
           items:
-            $ref: "#/definitions/tapi.connectivity.connectivityservice.EndPoint"
+            $ref: "#/definitions/tapi.connectivity.createconnectivityservice.input.EndPoint"
         connection:
           type: "array"
           description: "none"
@@ -1607,7 +1338,7 @@ definitions:
           type: "array"
           description: "none"
           items:
-            $ref: "#/definitions/tapi.connectivity.connectivityservice.EndPoint"
+            $ref: "#/definitions/tapi.connectivity.createconnectivityservice.input.EndPoint"
         connection:
           type: "array"
           description: "none"
@@ -1642,7 +1373,7 @@ definitions:
           type: "array"
           description: "none"
           items:
-            $ref: "#/definitions/tapi.connectivity.connectivityservice.EndPoint"
+            $ref: "#/definitions/tapi.connectivity.createconnectivityservice.input.EndPoint"
         connection:
           type: "array"
           description: "none"
@@ -1701,29 +1432,13 @@ definitions:
           type: "array"
           description: "none"
           items:
-            $ref: "#/definitions/tapi.connectivity.connectivityservice.EndPoint"
+            $ref: "#/definitions/tapi.connectivity.createconnectivityservice.input.EndPoint"
         connection:
           type: "array"
           description: "none"
           items:
             $ref: "#/definitions/tapi.connectivity.ConnectionRef"
       description: "none"
-  tapi.path.computation.ContextAugmentation1:
-    type: "object"
-    properties:
-      path-comp-service:
-        type: "array"
-        description: "none"
-        items:
-          $ref: "#/definitions/tapi.path.computation.PathComputationService"
-      path:
-        type: "array"
-        description: "none"
-        items:
-          $ref: "#/definitions/tapi.path.computation.Path"
-    x-augmentation:
-      prefix: "tapi-path-computation"
-      namespace: "urn:onf:otcc:yang:tapi-path-computation"
   tapi.path.computation.DiversityPolicy:
     type: "string"
     enum:
@@ -1732,29 +1447,6 @@ definitions:
     - "SNG"
     - "NODE"
     - "LINK"
-  tapi.path.computation.Path:
-    allOf:
-    - $ref: "#/definitions/tapi.common.GlobalClass"
-    - type: "object"
-      properties:
-        layer-protocol-name:
-          description: "none"
-          $ref: "#/definitions/tapi.common.LayerProtocolName"
-        link:
-          type: "array"
-          description: "none"
-          items:
-            $ref: "#/definitions/tapi.topology.LinkRef"
-        routing-constraint:
-          description: "none"
-          $ref: "#/definitions/tapi.path.computation.RoutingConstraint"
-        direction:
-          description: "none"
-          $ref: "#/definitions/tapi.common.ForwardingDirection"
-      description: "Path is described by an ordered list of TE Links. A TE Link is\
-        \ defined by a pair of Node/NodeEdgePoint IDs. A Connection is realized by\
-        \ concatenating link resources (associated with a Link) and the lower-level\
-        \ connections (cross-connections) in the different nodes"
   tapi.path.computation.PathComputationService:
     allOf:
     - $ref: "#/definitions/tapi.common.GlobalClass"
@@ -2022,20 +1714,6 @@ definitions:
     properties:
       output:
         $ref: "#/definitions/tapi.path.computation.optimizep2ppath.Output"
-  tapi.topology.ContextAugmentation3:
-    type: "object"
-    properties:
-      nw-topology-service:
-        description: "none"
-        $ref: "#/definitions/tapi.topology.NetworkTopologyService"
-      topology:
-        type: "array"
-        description: "none"
-        items:
-          $ref: "#/definitions/tapi.topology.Topology"
-    x-augmentation:
-      prefix: "tapi-topology"
-      namespace: "urn:onf:otcc:yang:tapi-topology"
   tapi.topology.CostCharacteristic:
     type: "object"
     properties:
@@ -2156,17 +1834,6 @@ definitions:
           type: "string"
           description: "none"
           x-path: "/tapi-common:context/tapi-topology:topology/tapi-topology:link/tapi-topology:uuid"
-      description: "none"
-  tapi.topology.NetworkTopologyService:
-    allOf:
-    - $ref: "#/definitions/tapi.common.GlobalClass"
-    - type: "object"
-      properties:
-        topology:
-          type: "array"
-          description: "none"
-          items:
-            $ref: "#/definitions/tapi.topology.TopologyRef"
       description: "none"
   tapi.topology.Node:
     allOf:

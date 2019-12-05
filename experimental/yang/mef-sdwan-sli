@@ -1,4 +1,4 @@
-module mef-sdwan {
+module mef-sdwan-sli {
     namespace "urn:mef:yang:mef-sdwan";
     prefix mef-sdwan;
 

@@ -1,0 +1,152 @@
+module mef-sdwan {
+    namespace "urn:mef:yang:mef-sdwan";
+    prefix mef-sdwan;
+
+    import tapi-common {
+      prefix tapi-common;
+    }
+
+    import ietf-inet-types {
+        prefix "inet";
+    }
+    organization "MEF Forum";
+    contact "MEF Forum";
+    description "none";
+    revision 2018-08-30 {
+        description "MEF SD-WAN";
+        reference "Contribution A66009_001_SD-WAN WD 0.18-cfcb1_Ruffles.pdf";
+    }
+
+    typedef sdwan-edge-type {
+        type enumeration {
+            enum physical {
+                description "none";
+            }
+            enum virtual {
+                description "none";
+            }
+        }
+    }
+
+    typedef sdwan-l2-technology {
+        type enumeration {
+            enum 802_11 {
+                description "wifi";
+            }
+            enum 802_1ax {
+                description "Ethernet link aggregation";
+            }
+            enum p2p {
+                description "L2 P2P";
+            }
+        }
+    }
+
+    typedef sdwan-addressing {
+        type enumeration {
+                enum none {
+                    description "";
+                }
+                enum dhcp {
+                    description "";
+                }
+                enum static {
+                    description "";
+                }
+                enum slaac {
+                    description "Stateless Address Autoconfiguration. For ipv6 only";
+                }
+
+                enum ll_only {
+                    description "For ipv6 only";
+                }
+            }
+    }
+
+
+    typedef sdwan-mtu {
+        description "As definied in MEF XXX section 11.6 [R96]";
+        type int32 {
+            range 1280..max;
+        }
+    }
+
+    grouping ip-config {
+        leaf ip-prefix {
+            type inet:ip-prefix;
+        }
+        leaf-list provider-addresses {
+            type inet:ip-address;
+        }
+        leaf-list reserved-ip-prefix {
+            type inet:ip-prefix;
+            description "Specify IP addresses that are not available for the Subscriber to assign statically.
+                         If DHCP is used, the IP address range from which addresses are dynamically assigned
+                         is taken from this pool of reserved addresses";
+        }
+    }
+
+    grouping sdwan-uni {
+	/* leaf uuid { because global class
+            type uuid;
+        }*/
+        leaf edge-type {
+            type sdwan-edge-type ;
+        }
+
+        leaf l2-technology {
+            type sdwan-l2-technology;
+        }
+        container ipv4-configuration {
+            container primary-subnet {
+                uses ip-config;
+                leaf subscriber-address {
+                    type inet:ip-address;
+                }
+            }
+            list secondary-subnet {
+                uses ip-config;
+                key 'ip-prefix';
+            }
+        }
+
+        container ipv6-configuration {
+            /* it think that ipv6 and ipv4 should have the same structure if possible but
+            it is not that clear from the SD-WAN spec */
+            list subnet {
+                uses ip-config;
+                key 'ip-prefix';
+            }
+            leaf subscriber-address {
+                type inet:ip-address;
+            }
+        }
+
+        leaf mtu {
+            description "Maximum Transmit Unit int";
+            type sdwan-mtu;
+            units "octets";
+        }
+    }
+
+    augment "/tapi-common:context/tapi-common:service-interface-point" {
+      container sdwan-uni {
+        uses sdwan-uni;
+      }
+      description "none";
+    }
+
+    augment "/tapi-common:get-service-interface-point-details/tapi-common:output/tapi-common:sip" {
+      container sdwan-uni {
+        uses sdwan-uni;
+      }
+      description "none";
+    }
+
+    augment "/tapi-common:get-service-interface-point-list/tapi-common:output/tapi-common:sip" {
+      container sdwan-uni {
+        uses sdwan-uni;
+      }
+      description "none";
+    }
+}
